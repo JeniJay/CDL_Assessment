@@ -23,6 +23,8 @@ public class StoreApplication {
 	Map<String, Integer> items;
 	Map<String, ItemOffer> offers ;
 	Items item;
+	
+	/*Add some sample items and offers since we don't use database*/
 	private StoreApplication()
 	{
 		items = new HashMap<String, Integer>();
@@ -40,25 +42,25 @@ public class StoreApplication {
 		item.setItems(items);
 		item.setOffers(offers);
 	}
-	
+	/*Main method of store application*/
 	public static void main(String[] args) {
 		StoreApplication storeApplication=new StoreApplication();
 		CheckOutSystem checkout = new CheckOutSystem();
-		AddInventry add = new AddInventry();
+		InventrySystem inventry = new InventrySystem();
 		try (Scanner scanner = new Scanner(System.in)) {
 			boolean flag = true;
 			while (flag) {
-				System.out.print("Enter 'c' if you are a customer or enter 's' if you are a store manager :");
+				System.out.print("Enter 'c' if you are a customer or enter 's' if you are a store manager(or 'done' to exit ) :");
 				if (scanner.hasNextLine()) {
 					String input = scanner.nextLine();
-
-					if (input.equals("done"))
-						break;
-					if (input.equalsIgnoreCase("c")) {
-						checkout.calculateCustomerCheckout(storeApplication.item);
+					if (input.equals("done")) {
+						flag = false;
+					}
+					else if (input.equalsIgnoreCase("c")) {
+						checkout.processCustomerCheckout(storeApplication.item);
 						flag = false;
 					} else if (input.equalsIgnoreCase("s")) {
-						add.addInventry(storeApplication.item);
+						inventry.addInventry(storeApplication.item);
 						flag = true;
 					} else {
 						System.out.println("Enter valid input");

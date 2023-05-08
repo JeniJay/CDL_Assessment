@@ -14,8 +14,9 @@ import java.util.Scanner;
  * @author jenifer
  *
  */
-public class AddInventry {
+public class InventrySystem {
 
+	/*add or update the inventry by store manager after the successful login*/
 	public void addInventry(Items item) {
 		// TODO Auto-generated method stub
 		Scanner scanner = new Scanner(System.in);
@@ -41,7 +42,7 @@ public class AddInventry {
 				System.out.print("Do you want to add/change item (y/n) :");
 				String itemFlag = scanner.nextLine();
 				if (itemFlag.equals("y")) {
-					System.out.print("Enter item name (or 'exit' to finish): ");
+					System.out.print("Enter item name (or 'done' to finish): ");
 					String itemName = scanner.nextLine();
 
 					if (itemName.equals("done")) {
@@ -60,6 +61,7 @@ public class AddInventry {
 								String offerPrice = scanner.nextLine();
 								item.getOffers().put(itemName,
 										new ItemOffer(Integer.parseInt(offerQuantity), Integer.parseInt(offerPrice)));
+								System.out.println("Items are added/updated successfully");
 							} else if (offerFlag.equals("n"))
 								item.getOffers().remove(itemName);
 							flag = true;

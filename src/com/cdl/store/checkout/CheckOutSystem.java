@@ -6,26 +6,33 @@ import java.util.Scanner;
 
 import com.cdl.store.checkout.model.ItemOffer;
 import com.cdl.store.checkout.model.Items;
-
+/**
+ * @author jenifer
+ *
+ */
 public class CheckOutSystem {
 	Map<String,Integer> itemsToCalculate=new HashMap<String,Integer>();
 	
+	/*add the scanned items in the cart*/
 	public void addItem(String item) throws Exception{
 		itemsToCalculate.put(item, itemsToCalculate.getOrDefault(item, 0) + 1);
     }
 
-	public void calculateCustomerCheckout(Items item) {
+	/*method to process the customer checkout */
+	public void processCustomerCheckout(Items item) {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter item name (or 'exit' to finish):");
 		if(scanner.hasNextLine())
 		{
 			boolean flag=true;
+			int total=0;
 			while(flag)
 			{
 				String itemName=scanner.nextLine();
-				if(itemName.equals("done"))
+				if(itemName.equals("exit"))
 				{
-					//System.out.println("Total :"+total);
+					if(total!=0)
+						System.out.println("Please pay "+total+" pence to proceed..");
 					break;
 				}
 				if(item.getItems().containsKey(itemName))
@@ -35,7 +42,7 @@ public class CheckOutSystem {
 					} catch (Exception e) {
 						System.out.println("Invalid item name "+e.getMessage());
 					}
-					calculateTotal(item);
+					total=calculateTotal(item);
 					flag=true;
 				}else
 				{
@@ -48,7 +55,8 @@ public class CheckOutSystem {
 		
 	}
 
-	private void calculateTotal(Items item) {
+	/*calculate the total pence on each item is added */
+	private int calculateTotal(Items item) {
 		// TODO Auto-generated method stub
 		Map<String,Integer> availableItems=item.getItems();
 		Map<String,ItemOffer> availableOffers=item.getOffers();
@@ -71,7 +79,7 @@ public class CheckOutSystem {
 			total+=itemPrice;
 		}
 		System.out.println("       Total :"+total);
-		
+		return total;
 	}
 
 }
